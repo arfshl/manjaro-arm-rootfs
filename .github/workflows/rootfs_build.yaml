@@ -71,12 +71,6 @@ jobs:
             sudo mkdir -p /etc/pacman.d
             sudo touch /etc/pacman.d/mirrorlist
           popd
-      -
-        name: setup-qemu-binfmt
-        shell: bash
-        run: |
-          sudo wget https://gitlab.manjaro.org/manjaro-arm/packages/manjaro-arm-qemu-static/-/raw/master/qemu-static.conf -O /usr/lib/binfmt.d/qemu-static.conf
-          sudo service systemd-binfmt restart
           
       - 
         name: install-arch-install-scripts
@@ -132,5 +126,19 @@ jobs:
           name: ${{ steps.time.outputs.time }}
           draft: false
           prerelease: false
+          files: |
+            ${{ env.FILE_PATH }}
+
+      -
+        name: Release assets (always latest releasename)
+        uses: softprops/action-gh-release@v0.1.15
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: latest
+          name: latest
+          draft: false
+          prerelease: false
+          make_latest: true
           files: |
             ${{ env.FILE_PATH }}
