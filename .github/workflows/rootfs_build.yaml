@@ -38,10 +38,6 @@ jobs:
             libssl-dev \
             fakeroot \
             dh-autoreconf \
-            qemu-utils \
-            qemu-efi-aarch64 \
-            qemu-system-arm \
-            qemu-user-static
           sudo pip3 install meson
           sudo pip3 install ninja
           
